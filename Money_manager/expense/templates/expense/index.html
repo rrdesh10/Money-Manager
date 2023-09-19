@@ -1,0 +1,32 @@
+{% extends 'expense/base.html' %}
+
+{% block body %}
+<form method="POST" class="shadow-lg rounded-lg m-10 ">
+    {% csrf_token %}
+    <div class="form-container px-10 py-10 flex">
+        <div class="mx-10">
+            <div class="mb-5 mt-5">
+                <label class="text-gray-800 font-bold">Expense Name: </label>
+            </div>
+            <div class="border">{{ expense_form.name  }}</div>
+        </div>
+        <div class="mx-10">
+            <div class="mb-5 mt-5">
+                <label class="text-gray-800 font-bold">Expense Amount: </label>
+            </div>
+            <div class="border">{{ expense_form.amount  }}</div>
+        </div>
+        <div class="mx-10">
+            <div class="mb-5 mt-5">
+                <label class="text-gray-800 font-bold">Expense Category: </label>
+            </div>
+            <div class="border">{{ expense_form.category  }}</div>
+        </div>
+
+        <div class="mx-10"><button class="text-white bg-green-800 px-5 py-3 m-8 rounded-lg " type="submit">Add</button></div>
+        
+    </div>
+    
+</form>
+
+{% endblock %}

@@ -5,9 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'expense/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'expense/style.css' %}">
     <title></title>
 </head>
 <body>
+    <nav class="shadow-lg p-4">
+        <div class="container flex flex-wrap mx-auto justify-between items-center">
+            <a href="{% url 'index' %}" class="flex">
+                <img src="{% static 'expense/images/wallet.png' %}" class="h-10 w-10 mr-3">
+                <span class="font-semibold self-center text-xl">Money Manager</span>
+            </a>
+        </div>
+    </nav>
     {% block body %}
     {% endblock %}
 </body>

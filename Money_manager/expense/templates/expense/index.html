@@ -1,6 +1,8 @@
 {% extends 'expense/base.html' %}
-
+{% load static %}
+{% load humanize %}
 {% block body %}
+<div class="m-7 font-bold flex">Add Expenses <img src="{% static 'expense/images/add.png' %}" class="h-7"></div>
 <form method="POST" class="shadow-lg rounded-lg m-10 ">
     {% csrf_token %}
     <div class="form-container px-10 py-10 flex">
@@ -23,10 +25,55 @@
             <div class="border">{{ expense_form.category  }}</div>
         </div>
 
-        <div class="mx-10"><button class="text-white bg-green-800 px-5 py-3 m-8 rounded-lg " type="submit">Add</button></div>
-        
+        <div class="mx-10"><button class="text-white bg-green-800 px-5 py-2 mt-10 rounded-lg " type="submit">Add</button></div>
     </div>
-    
 </form>
+
+
+<div class="m-10 font-bold flex">Expenses <img src="{% static 'expense/images/rupee.png' %}" class="h-7"></div>
+<div class="shadow-lg m-10 rounded-lg">
+    <div class="expense-header flex flex-wrap space-x-40">
+        <span>Name</span>
+        <span>Amount</span>
+        <span>Category</span>
+        <span>Date</span>
+        <span>Edit</span>
+        <span>Delete</span>
+    </div>
+    <hr class="m-5">
+    {% for expense in expenses %}
+    <div class="expense-row flex flex-wrap space-x-40">
+        <span class="font-bold">{{expense.name}}</span>
+        <span class="font-bold">₹{{expense.amount|intcomma}}</span>
+        <span class="font-bold">{{expense.category}}</span>
+        <span class="font-bold">{{expense.date}}</span>
+        <span class="pl-28"><a href="{% url 'edit' expense.id %}">
+            <img class="h-6" src="{% static 'expense/images/edit.png' %}">
+        </a></span>
+        <span class="">
+            <form action="{% url 'delete' expense.id %}" method="POST">
+                {% csrf_token %}
+                <button name="delete" type="submit">
+                    <img class="h-6" src="{% static 'expense/images/delete.png' %}">
+                </button>
+            </form>
+        </span>
+    </div>
+    <br/>
+    {% endfor %}
+    <div class="px-80 py-5">
+        <span class="font-bold text-gray-700">
+            Total : ₹{{ total.amount__sum|intcomma }}
+        </span>
+    </div>
+</div>
+
+
+
+
+
+
+
+
 
 {% endblock %}

@@ -21,15 +21,24 @@ def index(request):
     # last_year total
     last_month = datetime.date.today() - datetime.timedelta(days=30)
     last_month_expense = Expense.objects.filter(date__gt=last_month)
-    monthly_sum = last_year_expense.aggregate(Sum('amount'))
+    monthly_sum = last_month_expense.aggregate(Sum('amount'))
 
     # last_year total
     last_week = datetime.date.today() - datetime.timedelta(days=7)
     last_week_expense = Expense.objects.filter(date__gt=last_week)
-    weekly_sum = last_year_expense.aggregate(Sum('amount'))
-    
+    weekly_sum = last_week_expense.aggregate(Sum('amount'))
+
+    # Daily sum
+    daily_sums = Expense.objects.filter().values('date').order_by('date').annotate(sum=Sum('amount'))
+
+    # Categorical Sum
+    category_sums = Expense.objects.filter().values('category').order_by('category').annotate(sum=Sum('amount'))
+
     expense_form = ExpenseForm()
-    return render(request, 'expense/index.html', {'expense_form':expense_form, 'expenses':expenses, 'total':total})
+    context = {'expense_form':expense_form, 'expenses':expenses, 'total':total, 'yearly_sum':yearly_sum, 
+               'monthly_sum':monthly_sum, 'weekly_sum':weekly_sum, 'daily_sums':daily_sums, 'category_sums':category_sums}
+    
+    return render(request, 'expense/index.html', context)
 
 
 def edit(request, id):

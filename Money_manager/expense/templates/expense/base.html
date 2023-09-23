@@ -15,6 +15,16 @@
                 <img src="{% static 'expense/images/wallet.png' %}" class="h-10 w-10 mr-3">
                 <span class="font-semibold self-center text-xl">Money Manager</span>
             </a>
+
+            <div class="space-x-1">
+                {% if request.user.is_authenticated %}
+                <a class="py-4 px-2 font-semibold text-lg" href="{% url 'logout' %}">Logout</a>
+                <a class="py-4 px-2 font-semibold text-lg" href="">{{ user.username }}</a>
+                {% else %}
+                <a class="py-2 px-2 font-semibold text-lg" href="{% url 'login' %}">Login</a>
+                <a class="py-2 px-2 font-semibold text-lg" href="{% url 'register' %}">Register</a>
+                {% endif %}
+            </div>
         </div>
     </nav>
     {% block body %}
